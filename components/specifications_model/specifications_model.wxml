@@ -1,0 +1,40 @@
+<view id="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+ <view class="modal-dialog" wx:if="{{showModal}}">
+    <view bindtap='close_box'>
+    <image src="{{__wxapp_img.store.close3.url}}" class="close3"></image>
+    </view>
+    <view class="modal-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{goods_name}}</view>
+    <scroll-view scroll-y="true" style="height: 100%;">
+        <view class="modal-content">
+        <view>
+            <view class="attr-group" wx:for="{{attr_group_list}}" wx:for-item="attr_group" wx:key='{{attr_group.id}}'
+                    wx:if="{{attr_group.attr_list.length>0}}">
+                <view class="attr-group-name" >{{attr_group.attr_group_name}} :</view>
+                <view class="attr-list">
+                    <block wx:for="{{attr_group.attr_list}}" wx:key='{{item.id}}'>
+                    <text class="attr_name {{item.checked?'select_active':''}} {{item.is_attr_num ? 'attr_num_0' : ''}}" data-group-id="{{attr_group.attr_group_id}}" data-id="{{item.attr_id}}" bindtap="attrClick">{{item.attr_name}}</text> 
+                    </block>
+                </view>
+            </view>
+        </view>     
+        </view> 
+    </scroll-view>
+    <view class="modal-footer">
+        <block wx:if="{{check_goods_price}}">
+        <view class="guigeprice">￥{{check_goods_price}}</view>
+        </block>
+        <block wx:else>
+        <view class="guigeprice">￥{{temporaryGood.price}}</view>  
+        </block>
+        <block wx:if="{{check_num}}">
+            <view class="btn-car_num">
+                <image class="carStandard" src="{{__wxapp_img.store.jian.url}}" bindtap="guigejian" ></image>
+                <input bindinput='goodNumChange' type='number' class="carStandard good_num" id="num" maxlength='999' value='{{check_num}}'></input>
+                <image class="carStandard" src="{{__wxapp_img.store.jia.url}}" bindtap="onConfirm"></image>
+            </view>
+        </block>
+        <block wx:else>
+            <view class="btn-car" style="background:#FF4544;color:#FFFFFF;" bindtap="onConfirm" data-status="confirm">加入购物车</view>
+        </block>
+    </view> 
+</view> 
